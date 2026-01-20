@@ -1,8 +1,9 @@
-
+import {Button} from '@heroui/button'; 
 export default function Home() {
   return (
-    <div className="container text-blue-400 bg-red-300">
+    <div className="w-full text-blue-400 bg-red-300">
       Home
+      <Button>Click me</Button>
     </div>
   );
 }
