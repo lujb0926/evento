@@ -3,7 +3,7 @@ import { Anton, Roboto } from "next/font/google";
 import "./globals.css";
 import {Providers} from "./providers";
 import NavComponent from "@/components/nav/header";
-
+import AuthProvier from "@/providers/authProvider";
 const geistRoboto = Roboto({
   weight: ['400', '700'],
   style: ['normal', 'italic'],
@@ -32,10 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistRoboto.variable} ${geistAnton.variable}`}>
-        <Providers>
-          <NavComponent/>
-          {children}
-        </Providers>
+        <AuthProvier>
+          <Providers>
+            <NavComponent/>
+            {children}
+          </Providers>
+        </AuthProvier>
       </body>
     </html>
   );

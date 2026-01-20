@@ -1,15 +1,22 @@
-import { getServerSession } from "next-auth"
-import { options } from "@/api/auth/[...nextauth]/options"
+'use client'
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default async function PostsPage () {
-  const session = await getServerSession(options);
-  console.log('session ', session);
+export default function PostsPage () {
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/api/auth/signin?callbackUrl=/posts')
+    }
+  });
+  console.log('posts session ', session);
+  console.log('posts status ', status);
   return (
     <div>
       {
-        !session ?
+        status !== 'authenticated' ?
         <h3>Not Auth</h3>
-        : <h3>Show Posts !!!</h3>
+        : <h3>Show Posts !!!  {session.user?.email}</h3>
       }
     </div>
   )
