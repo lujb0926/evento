@@ -24,11 +24,29 @@ export default function NavComponent () {
               key="register"
               as={Link}
               href="register"
+              className="text-black"
             >
               Register
             </DropdownItem>
             <DropdownItem
+              key="dashboard"
+              as={Link}
+              href="dashboard"
+              className="text-black"
+            >
+              Dashboard
+            </DropdownItem>
+             <DropdownItem
+              key="posts"
+              as={Link}
+              href="posts"
+              className="text-black"
+            >
+              Posts
+            </DropdownItem>
+            <DropdownItem
               key="logout"
+              className="text-black"
             >
               Logout
             </DropdownItem>
