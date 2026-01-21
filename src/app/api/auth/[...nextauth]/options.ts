@@ -1,8 +1,12 @@
 
 
+import DBconnect from "@/lib/db";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from 'next-auth/providers/github'
+import User from '@/lib/models/user'
+import { passwordCheck } from "@/components/utils";
+
 export const options: AuthOptions = {
   providers: [
     CredentialsProvider<any>({
@@ -19,16 +23,22 @@ export const options: AuthOptions = {
           placeholder: 'Enter your password'
         }
       },
-      authorize: (credential: any) => {
-        const user = {
-          id: '_id123456',
-          email: 'knight_lujb@163.com',
-          password: 'testing123'
+      authorize: async (credential: any) => {
+        console.log('authorize-----1111');
+
+        await DBconnect();
+        const user = await User.findOne({
+          email: credential?.email
+        })
+        console.log('authorize-----2222', user);
+        if (!user) {
+          console.log('authorize-----333');
+          return null
         }
-        if (
-          credential?.email && credential?.email === user.email &&
-          credential?.password && credential?.password === user.password) {
-            return user;
+        console.log('authorize-----4444');
+        const pwdOk = await passwordCheck(credential?.password, user.password);
+        if (pwdOk) {
+          return user;
         }
         return null;
       },
@@ -38,6 +48,9 @@ export const options: AuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!
     })
   ],
+  pages: {
+    signIn: '/register'
+  },
   theme: {
     colorScheme: 'dark',
     brandColor: '',
