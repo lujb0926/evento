@@ -1,7 +1,15 @@
 'use client'
-import { Navbar, NavbarBrand, NavbarContent, Dropdown, DropdownItem, DropdownTrigger, DropdownMenu, Button } from "@heroui/react"
-import {Link} from "@heroui/link";
-export default function NavComponent () {
+import { Navbar, NavbarBrand, NavbarContent, Dropdown, DropdownItem, DropdownTrigger, DropdownMenu, Button, DropdownSection } from "@heroui/react"
+import { Link } from "@heroui/link";
+import { signOut, useSession } from "next-auth/react";
+export default function NavComponent() {
+  const { data: session } = useSession()
+  console.log('data=== ', session);
+  const signOutUser = () => {
+    signOut({
+      callbackUrl: '/'
+    })
+  }
   return (
     <Navbar
       shouldHideOnScroll
@@ -20,36 +28,64 @@ export default function NavComponent () {
             </Button>
           </DropdownTrigger>
           <DropdownMenu aria-label="Menu action" variant="flat">
-            <DropdownItem
-              key="register"
-              as={Link}
-              href="register"
-              className="text-black"
-            >
-              Register
-            </DropdownItem>
-            <DropdownItem
-              key="dashboard"
-              as={Link}
-              href="dashboard"
-              className="text-black"
-            >
-              Dashboard
-            </DropdownItem>
-             <DropdownItem
-              key="posts"
-              as={Link}
-              href="posts"
-              className="text-black"
-            >
-              Posts
-            </DropdownItem>
-            <DropdownItem
-              key="logout"
-              className="text-black"
-            >
-              Logout
-            </DropdownItem>
+            <DropdownSection>
+              {
+                session ?
+                  <DropdownItem
+                    key="logout"
+                    className="text-black"
+                    onPress={signOutUser}
+                  >
+                    Logout
+                  </DropdownItem>
+                  :
+                  <DropdownItem
+                    key="register"
+                    as={Link}
+                    href="/register"
+                    className="text-black"
+                  >
+                    Register/Login
+                  </DropdownItem>
+              }
+            </DropdownSection>
+            {
+              session &&
+              <DropdownSection title="Admin actions">
+                <DropdownItem
+                  key="dashboard"
+                  as={Link}
+                  href="dashboard"
+                  className="text-black"
+                >
+                  Dashboard
+                </DropdownItem>
+                <DropdownItem
+                  key="addevent"
+                  as={Link}
+                  href="/dashboard/add_event"
+                  className="text-black"
+                >
+                  Add Event
+                </DropdownItem>
+                <DropdownItem
+                  key="addvenue"
+                  as={Link}
+                  href="/dashboard/add_venue"
+                  className="text-black"
+                >
+                  Add Venue
+                </DropdownItem>
+                <DropdownItem
+                  key="posts"
+                  as={Link}
+                  href="posts"
+                  className="text-black"
+                >
+                  Posts
+                </DropdownItem>
+              </DropdownSection>
+            }
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
