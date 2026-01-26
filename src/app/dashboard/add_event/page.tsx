@@ -1,5 +1,10 @@
-export default function AddEventPage () {
+import AddEventComponent from "@/components/forms/add_event_form";
+import { getAllVenues } from "@/lib/action/action";
+
+
+export default async function AddEventPage () {
+  const venues = await getAllVenues()
   return (
-    <div>AddEventPage</div>
+    <AddEventComponent venueList={JSON.parse(JSON.stringify(venues))}/>
   )
 }

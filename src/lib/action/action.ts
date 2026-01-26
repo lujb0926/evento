@@ -1,7 +1,7 @@
 'use server'
 import { addVenueSchema } from "@/components/forms/add_venue_schema";
 import DBconnect from "../db"
-import Venue from '../models/venue'
+import Venue, { IVenue } from '../models/venue'
 import { revalidatePath } from "next/cache";
 
 export interface IActionReturn {
@@ -32,5 +32,15 @@ export const addVenue = async (prveData: any, formData: FormData): Promise<IActi
       success: false,
       message: error?.errors
     }
+  }
+}
+
+export const getAllVenues = async (): Promise<IVenue[]> => {
+  try {
+    await DBconnect();
+    const venues = await Venue.find({});
+    return venues;
+  } catch (error) {
+    return [];
   }
 }

@@ -1,5 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
+export interface IVenue {
+  _id?: string;
+  name: string;
+  address: string;
+  state: string;
+}
+
 const venueSchema = new Schema({
   name: {
     type: String,
