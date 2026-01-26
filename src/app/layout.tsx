@@ -4,6 +4,7 @@ import "./globals.css";
 import {Providers} from "./providers";
 import NavComponent from "@/components/nav/header";
 import AuthProvier from "@/providers/authProvider";
+import { ToastContainer } from "react-toastify";
 const geistRoboto = Roboto({
   weight: ['400', '700'],
   style: ['normal', 'italic'],
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Providers>
             <NavComponent/>
             {children}
+            <ToastContainer/>
           </Providers>
         </AuthProvier>
       </body>

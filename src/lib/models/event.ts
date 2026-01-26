@@ -1,5 +1,14 @@
 import mongoose, { Schema } from "mongoose";
 
+export interface IEvent {
+  _id?: string;
+  artist: string;
+  description: string;
+  date: string;
+  slug: string;
+  venue: string;
+}
+
 const eventSchema = new Schema({
   artist: String,
   description: String,

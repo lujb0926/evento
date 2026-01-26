@@ -7,10 +7,15 @@ import * as Yup from 'yup';
 import { errorHelper } from "../utils";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { IEvent } from "@/lib/models/event";
+import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
 
-export default function AddEventComponent({ venueList }: { venueList: IVenue[] }) {
+export default function AddEventComponent({ venueList, postEvent }: { venueList: IVenue[], postEvent: (formData: IEvent) => Promise<any> }) {
   const [startDate, setStartDate] = useState<Date | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
   const formik = useFormik({
     initialValues: {
       artist: '',
@@ -27,10 +32,26 @@ export default function AddEventComponent({ venueList }: { venueList: IVenue[] }
       slug: Yup.string().required('Slug is required')
     }),
     onSubmit: async (values) => {
-      // Handle form submission
       console.log('values ===', values);
+      handleSubmit(values as IEvent);
     }
   })
+
+  const handleSubmit = (formData: IEvent) => {
+    startTransition(async () => {
+      const { success, message } = await postEvent(formData);
+      if (!success) {
+        setError(message);
+      } else {
+        toast.success('Event added successfully', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+        });
+        redirect('/dashboard')
+      }
+    })
+  }
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-2xl mb-5 mt-5">Add New Event</h1>
@@ -93,9 +114,18 @@ export default function AddEventComponent({ venueList }: { venueList: IVenue[] }
           {...formik.getFieldProps('slug')}
           {...errorHelper(formik, 'slug')}
         />
-        <Button type="submit" variant="solid" color="primary">
-          Add Event
-        </Button>
+        {
+          !isPending ?
+            <Button type="submit" variant="solid" color="primary">
+              Add Event
+            </Button>
+            : null
+        }
+        {
+          error ?
+            <div className="text-xs text-red-600">{error}</div>
+            : null
+        }
       </form>
     </div>
   )
