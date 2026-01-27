@@ -2,6 +2,7 @@
 import { addVenueSchema } from "@/components/forms/add_venue_schema";
 import DBconnect from "../db"
 import Venue, { IVenue } from '../models/venue'
+import Event, { IEvent } from '../models/event';
 import { revalidatePath } from "next/cache";
 
 export interface IActionReturn {
@@ -9,7 +10,7 @@ export interface IActionReturn {
   message: string | string[]
 }
 
-export const addVenue = async (prveData: any, formData: FormData): Promise<IActionReturn>  => {
+export const addVenue = async (prveData: any, formData: FormData): Promise<IActionReturn> => {
   await DBconnect();
   try {
     const isValidated = await addVenueSchema(formData);
@@ -42,5 +43,19 @@ export const getAllVenues = async (): Promise<IVenue[]> => {
     return venues;
   } catch (error) {
     return [];
+  }
+}
+
+export const getEventsPage = async (skip: number, limit: number): Promise<IEvent[]> => {
+  await DBconnect();
+  try {
+    const events = await Event.find({})
+      .populate({path:'venue',model:Venue})
+      .sort([['_id','desc']])
+      .skip(skip)
+      .limit(limit)
+    return events;
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }
