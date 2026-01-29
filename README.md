@@ -39,9 +39,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## 原视频的代码github地址
 # https://github.com/ferlobo1985/UDMY-REACT19-Next-JS-Event0/tree/35-Event-page-Card/src/app/register
 
-## mogondb 云数据库地址： https://cloud.mongodb.com/v2/69706c1ce039e4d4e6c99b05#/clusters 
-# 用户名： knight_lujb@163.com 密码： lujiangbo18730907512
-
 mongodb+srv://knightlujb_db_user:EMQDbPP4A3ztStab@cluster0.dqzqhmc.mongodb.net/?appName=Cluster0
 原来的 knightlujb_db_user EMQDbPP4A3ztStab
 
