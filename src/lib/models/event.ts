@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { IVenue } from "./venue";
 
 export interface IEvent {
   _id?: string;
@@ -6,7 +7,7 @@ export interface IEvent {
   description: string;
   date: string;
   slug: string;
-  venue: string;
+  venue: string | IVenue;
 }
 
 const eventSchema = new Schema({

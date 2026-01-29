@@ -1,7 +1,8 @@
 'use client'
 import { IEvent } from '@/lib/models/event';
+import { IVenue } from '@/lib/models/venue';
 import { Card, CardHeader, CardFooter, Image as UIimage, Button } from '@heroui/react';
-import { set } from 'mongoose';
+import Link from 'next/link';
 import { useState } from 'react';
 import Masonry from 'react-masonry-css';
 const breakpointColumnsObj = {
@@ -41,7 +42,7 @@ export default function EventsMasonry({ events, loadMore }: { events: IEvent[], 
         {eventsList.map((event: IEvent, index: number) => (
           <Card key={`${event._id}+${index}`} isFooterBlurred className="w-full col-span-12 sm:col-span-7">
             <CardHeader className="absolute z-10 top-0 flex-col items-start bg-black/40" >
-              <p className='text-tiny text-white/60 uppercase font-bold'>{event.venue.name}</p>
+              <p className='text-tiny text-white/60 uppercase font-bold'>{(event.venue as IVenue).name}</p>
               <h4 className='text-white/90 font-medium text-xl'>{event.artist}</h4>
             </CardHeader>
             <UIimage
@@ -52,7 +53,12 @@ export default function EventsMasonry({ events, loadMore }: { events: IEvent[], 
               className='z-0 w-full h-full object-cover'
               src={`https://picsum.photos/200/${randHeight(index)}?${index}`}
             />
-            <CardFooter className="absolute z-10 bottom-0 bg-black/40">
+            {/* <CardFooter className="absolute z-10 bottom-0 bg-black/40" onClick={() => {
+              redirect(`/evens/${event.slug}`);
+            }}>
+              Go to event
+            </CardFooter> */}
+            <CardFooter className="absolute z-10 bottom-0 bg-black/40 text-white" as={Link} href={`/evens/${event.slug}`}>
               Go to event
             </CardFooter>
           </Card>

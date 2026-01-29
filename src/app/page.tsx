@@ -6,7 +6,7 @@ export default async function Home() {
   const loadMore = async (skip: number, limit: number) => {
     'use server';
     const moreEvents = await getEventsPage(skip, limit);
-    return JSON.parse(JSON.stringify(moreEvents));
+    return JSON.parse(JSON.stringify(moreEvents));// 很重要。如果不进行序列化会导致加载更多时候报错 循环调用溢出
   }
   return (
     <div className="w-full">

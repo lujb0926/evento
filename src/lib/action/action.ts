@@ -59,3 +59,13 @@ export const getEventsPage = async (skip: number, limit: number): Promise<IEvent
     throw new Error(error.message);
   }
 }
+
+export const getEventBySlug = async (slug: string): Promise<IEvent | null> => {
+  await DBconnect();
+  try {
+    const event = await Event.findOne({ slug }).populate({path:'venue',model:Venue});
+    return event;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
