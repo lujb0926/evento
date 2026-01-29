@@ -13,10 +13,13 @@
 // }
 
 
-export { default } from 'next-auth/middleware';
+import default1 from 'next-auth/middleware';
+console.log('middleware default', typeof default1, default1);
 
 export const config = {
   matcher: [
     '/dashboard'
   ]
 }
+
+export default default1;

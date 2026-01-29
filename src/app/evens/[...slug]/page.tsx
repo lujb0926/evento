@@ -28,7 +28,7 @@ export default async function EvensSlugPage({params}: {params: Promise<any>}) {
       </div>
       <VenueCardComponent
         venueData={JSON.parse(JSON.stringify(event?.venue))}
-        eventDate={event?.date}
+        eventDate={(event?.date as Date)?.toLocaleString?.()}
         />
     </div>
   )

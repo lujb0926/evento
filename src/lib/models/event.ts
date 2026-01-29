@@ -5,7 +5,7 @@ export interface IEvent {
   _id?: string;
   artist: string;
   description: string;
-  date: string;
+  date: string|Date;
   slug: string;
   venue: string | IVenue;
 }

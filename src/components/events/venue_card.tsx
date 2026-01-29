@@ -11,8 +11,7 @@ export default function VenueCardComponent({ venueData, eventDate }: { venueData
           <div className="flex flex-col">
             <div className="text-small">Venue Information</div>
             <div className="text-xl">{venueData?.name}</div>
-            <div className="text-xl">{eventDate?.toLocaleString()}</div>
-
+            <div className="text-xl">{eventDate}</div>
           </div>
         </CardHeader>
         <Divider />

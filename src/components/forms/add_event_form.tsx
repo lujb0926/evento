@@ -48,7 +48,7 @@ export default function AddEventComponent({ venueList, postEvent }: { venueList:
           autoClose: 5000,
           hideProgressBar: false,
         });
-        redirect('/dashboard')
+        redirect('/')
       }
     })
   }

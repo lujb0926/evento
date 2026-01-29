@@ -76,14 +76,6 @@ export default function NavComponent() {
                 >
                   Add Venue
                 </DropdownItem>
-                <DropdownItem
-                  key="posts"
-                  as={Link}
-                  href="posts"
-                  className="text-black"
-                >
-                  Posts
-                </DropdownItem>
               </DropdownSection>
             }
           </DropdownMenu>
