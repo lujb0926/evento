@@ -5,6 +5,7 @@ import {Providers} from "./providers";
 import NavComponent from "@/components/nav/header";
 import AuthProvier from "@/providers/authProvider";
 import { ToastContainer } from "react-toastify";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const geistRoboto = Roboto({
   weight: ['400', '700'],
   style: ['normal', 'italic'],
@@ -38,6 +39,7 @@ export default function RootLayout({
             <NavComponent/>
             {children}
             <ToastContainer/>
+            <SpeedInsights/>
           </Providers>
         </AuthProvier>
       </body>
